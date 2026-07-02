@@ -1,13 +1,9 @@
-import os
 import subprocess
-import streamlit as str
+import streamlit as st
 
 # Giao diện hiển thị trạng thái trên Streamlit Cloud
-str.title("Hệ Thống Bảo Mật Mã Hóa Đang Hoạt Động")
-str.write("Ứng dụng Flask đang chạy ngầm trên máy chủ.")
+st.title("Hệ Thống Bảo Mật Mã Hóa Đang Hoạt Động")
+st.success("Ứng dụng Flask đang được kích hoạt chạy ngầm trên máy chủ!")
 
-# Lấy cổng mạng (Port) do Streamlit cấp phát ngẫu nhiên
-port = os.environ.get("PORT", 8501)
-
-# Lệnh kích hoạt file Flask của bạn chạy ngầm
-subprocess.Popen(["python", "baomatdulieu.py", "--port", str(port)])
+# Gọi trực tiếp file Flask của bạn chạy ngầm trên cổng 5000 cố định
+subprocess.Popen(["python", "baomatdulieu.py"])
