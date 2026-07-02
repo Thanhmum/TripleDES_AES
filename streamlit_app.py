@@ -1,9 +1,20 @@
 import subprocess
 import streamlit as st
+import streamlit.components.v1 as components
+import time
 
-# Giao diện hiển thị trạng thái trên Streamlit Cloud
-st.title("Hệ Thống Bảo Mật Mã Hóa Đang Hoạt Động")
-st.success("Ứng dụng Flask đang được kích hoạt chạy ngầm trên máy chủ!")
+# Kích hoạt Flask chạy ngầm nếu chưa chạy
+@st.cache_resource
+def start_flask():
+    return subprocess.Popen(["python", "baomatdulieu.py"])
 
-# Gọi trực tiếp file Flask của bạn chạy ngầm trên cổng 5000 cố định
-subprocess.Popen(["python", "baomatdulieu.py"])
+start_flask()
+
+# Đợi 2 giây cho Flask khởi động xong
+time.sleep(2)
+
+# Cấu hình giao diện Streamlit tràn màn hình
+st.set_page_config(layout="wide")
+
+# Nhúng thẳng giao diện Flask (cổng 5000) vào giao diện Streamlit
+components.iframe("http://127.0.0.1:5000", height=800, scrolling=True)
