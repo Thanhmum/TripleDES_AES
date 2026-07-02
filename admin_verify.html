@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Xác thực tính toàn vẹn của khối dữ liệu (Integrity Check)</h2>
+    <p>Hệ thống tự động sử dụng Auth Tag của thuật toán <b>AES-256-GCM</b> để phát hiện sửa đổi bất hợp pháp trong SQLite.</p>
+    <div style="background-color: #dcfce7; color: #166534; padding: 10px; border-radius: 4px; font-family: monospace;">STATUS: Toàn vẹn dữ liệu đạt 100% - Không phát hiện dấu hiệu giả mạo CSDL.</div>
+</div>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Thông tin tài khoản hệ thống</h2>
+    <p>Tên định danh tài khoản: <b>{{ session.get('username') }}</b></p>
+    <p>Cấp bậc quyền hạn phân bổ: <span class="badge badge-aes">{{ session.get('role', '').upper() }}</span></p>
+</div>
+{% endblock %}

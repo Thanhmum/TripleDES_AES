@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Bảng điều khiển Quản trị viên (Admin Dashboard)</h2>
+    <p>Chào mừng Quản trị viên đến với trung tâm giám sát mật mã. Hãy nhấp vào liên kết dưới đây để thực hiện giám sát thông tin nhạy cảm của khách hàng và kiểm tra các bản ghi mã hóa trong cơ sở dữ liệu.</p>
+    <div style="margin-top: 20px;">
+        <a href="{{ url_for('admin_view') }}" style="background-color: var(--primary); color: white; padding: 10px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; display: inline-block;">Đi tới Trang Giám sát dữ liệu & Nhật ký</a>
+    </div>
+</div>
+{% endblock %}

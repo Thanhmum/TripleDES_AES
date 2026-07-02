@@ -1,0 +1,8 @@
+[2026-07-02 23:45:28] [USER: Thanh Bai] [ROLE: auditor] ACTION: Đăng ký tài khoản với vai trò auditor -> STATUS: Thành công
+[2026-07-02 23:45:56] [USER: Thanh Bai] [ROLE: auditor] ACTION: Đăng nhập vào hệ thống -> STATUS: Thành công
+[2026-07-02 23:46:51] [USER: Thanh Bai] [ROLE: auditor] ACTION: Đăng xuất khỏi hệ thống -> STATUS: Thành công
+[2026-07-02 23:47:32] [USER: Ngọc Minh ] [ROLE: user] ACTION: Đăng ký tài khoản với vai trò user -> STATUS: Thành công
+[2026-07-02 23:47:56] [USER: Ngọc Minh ] [ROLE: user] ACTION: Đăng nhập vào hệ thống -> STATUS: Thành công
+[2026-07-02 23:49:53] [USER: Ngọc Minh ] [ROLE: user] ACTION: Mã hóa & Lưu thông tin cho Ngọc Minh  (AES-GCM) -> STATUS: Thành công
+[2026-07-02 23:51:04] [USER: Ngọc Minh ] [ROLE: user] ACTION: Đăng xuất khỏi hệ thống -> STATUS: Thành công
+[2026-07-02 23:51:45] [USER: Thanh Bai] [ROLE: auditor] ACTION: Đăng nhập vào hệ thống -> STATUS: Thành công

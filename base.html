@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto DB App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div style="font-weight: bold; font-size: 18px;">🛡️ CSDL Bảo Mật Thẻ</div>
+        <div>
+            {% if session.get('username') %}
+                <span>Xin chào, <b>{{ session['username'] }}</b> ({{ session['role'].upper() }})</span>
+                {% if session['role'] == 'admin' %}
+                    <a href="{{ url_for('admin_dashboard') }}">Bảng điều khiển</a>
+                    <a href="{{ url_for('admin_view') }}">Xem dữ liệu</a>
+                {% elif session['role'] == 'auditor' %}
+                    <a href="{{ url_for('admin_view') }}">Nhật ký giám sát</a>
+                {% else %}
+                    <a href="{{ url_for('home') }}">Trang chủ</a>
+                {% endif %}
+                <a href="{{ url_for('logout') }}" style="color: var(--danger);">Đăng xuất</a>
+            {% else %}
+                <a href="{{ url_for('signin') }}">Đăng nhập</a>
+                <a href="{{ url_for('signup') }}">Đăng ký</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+</body>
+</html>

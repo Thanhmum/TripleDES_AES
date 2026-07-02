@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h2>Chỉnh sửa thông tin khách hàng</h2>
+    <p style="color: var(--slate);">Dữ liệu chỉnh sửa sẽ được tái mã hóa bằng AES-GCM với một Vector khởi tạo (IV) hoàn toàn mới.</p>
+    <a href="{{ url_for('home') }}">Quay về trang chủ</a>
+</div>
+{% endblock %}

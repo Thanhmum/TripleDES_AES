@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Trình Giám sát & Quản lý Thông tin Nhạy cảm</h2>
+
+    {% if session['role'] == 'admin' %}
+        {% if not allow_decrypt %}
+        <div style="background-color: #fff7ed; border-left: 4px solid var(--warning); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+            ⚠️ <b>Yêu cầu bảo mật nâng cao (12.3.0.8):</b> Mặc dù bạn là Admin, hệ thống chặn quyền xem dữ liệu thô ở trạng thái mặc định để chống lạm quyền. Bạn bắt buộc phải xác nhận kích hoạt quyền giải mã khẩn cấp dưới đây.
+            <br><br>
+            <a href="?activate_override=true" class="btn-danger" style="text-decoration: none; padding: 8px 15px; display: inline-block; border-radius: 4px; font-weight: bold; font-size: 13px;">⚠️ Tôi xác nhận kích hoạt quyền giải mã dữ liệu</a>
+        </div>
+        {% else %}
+        <div style="background-color: #fee2e2; border-left: 4px solid var(--danger); padding: 15px; margin-bottom: 20px; border-radius: 4px;">
+            🛑 <b>CẢNH BÁO:</b> Hệ thống đang chạy ở chế độ GIẢI MÃ RÕ. Mọi thao tác xem dữ liệu nhạy cảm của bạn hiện tại đang bị ghi nhật ký Audit Log!
+            <br><br>
+            <a href="?activate_override=false" class="btn-success" style="text-decoration: none; padding: 8px 15px; display: inline-block; border-radius: 4px; font-weight: bold; font-size: 13px;">Tắt quyền giải mã (Quay lại chế độ an toàn)</a>
+        </div>
+        {% endif %}
+    {% endif %}
+
+    <h3>Bảng dữ liệu tập trung toàn hệ thống</h3>
+    <div style="overflow-x: auto; margin-bottom: 30px;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Khách hàng</th>
+                    <th>Dữ liệu giải mã (Plaintext)</th>
+                    <th>Bản rõ trong cơ sở dữ liệu (Ciphertext)</th>
+                    <th>Thuật toán</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data_list %}
+                <tr>
+                    <td><b>{{ row.fullname }}</b></td>
+                    <td style="font-weight: bold; font-size: 13px;">
+                        ✉️ {{ row.email }}<br>📞 {{ row.phone }}
+                    </td>
+                    <td style="font-family: monospace; font-size: 11px; max-width: 300px; word-break: break-all; color: var(--danger);">
+                        [E]: {{ row.raw_email }}<br>[P]: {{ row.raw_phone }}
+                    </td>
+                    <td><span class="badge {% if row.cipher_method == 'AES-GCM' %}badge-aes{% else %}badge-3des{% endif %}">{{ row.cipher_method }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr style="border: 1px solid #e2e8f0; margin: 30px 0;">
+
+    <h3>📋 Nhật ký kiểm toán hệ thống (Bắt buộc ghi Log mọi lần giải mã)</h3>
+    <div class="log-box">
+        {% for log in logs %}
+            {{ log }}<br>
+        {% else %}
+            &gt; Chưa có dữ liệu nhật ký hệ thống.
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <h2>Đăng ký hệ thống bảo mật</h2>
+    <form method="POST">
+        <div class="form-group">
+            <label>Tên tài khoản:</label>
+            <input type="text" name="username" required autocomplete="off">
+        </div>
+        <div class="form-group">
+            <label>Mật khẩu:</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label>Vai trò truy cập (Role-based):</label>
+            <select name="role">
+                <option value="user">User (Người dùng nghiệp vụ)</option>
+                <option value="admin">Admin (Quản trị viên hệ thống)</option>
+                <option value="auditor">Auditor (Kiểm toán viên độc lập)</option>
+            </select>
+        </div>
+        <button type="submit" style="width: 100%;">Tạo tài khoản</button>
+    </form>
+</div>
+{% endblock %}

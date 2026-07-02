@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+    
+    <div class="card">
+        <h2>Mã hóa dữ liệu mới</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label>Họ và tên khách hàng:</label>
+                <input type="text" name="fullname" required placeholder="Nguyễn Văn A">
+            </div>
+            <div class="form-group">
+                <label>Email nhạy cảm:</label>
+                <input type="email" name="email" required placeholder="email@gmail.com">
+            </div>
+            <div class="form-group">
+                <label>Số điện thoại / Giấy tờ:</label>
+                <input type="text" name="phone" required placeholder="0912345678">
+            </div>
+            <div class="form-group">
+                <label>Thuật toán sử dụng:</label>
+                <select name="cipher_method">
+                    <option value="AES-GCM">AES-GCM (Chính thức - Khuyến nghị)</option>
+                    <option value="TripleDES">TripleDES (Chế độ cũ / So sánh Legacy)</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-success" style="width: 100%;">Mã hóa & Lưu DB</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Dữ liệu cá nhân đã tạo</h2>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tên khách hàng</th>
+                        <th>Dữ liệu đã giải mã (Ứng dụng hiển thị)</th>
+                        <th>Dữ liệu lưu trữ thực tế trong Database (Dữ liệu không ở dạng rõ)</th>
+                        <th>Cơ chế</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data_list %}
+                    <tr>
+                        <td><b>{{ row.fullname }}</b></td>
+                        <td style="color: var(--success); font-size: 14px;">
+                            ✉️ {{ row.email }}<br>📞 {{ row.phone }}
+                        </td>
+                        <td style="font-family: monospace; font-size: 11px; max-width: 250px; word-break: break-all; color: var(--slate);">
+                            [Email]: {{ row.raw_email }}<br>[Phone]: {{ row.raw_phone }}
+                        </td>
+                        <td>
+                            <span class="badge {% if row.cipher_method == 'AES-GCM' %}badge-aes{% else %}badge-3des{% endif %}">
+                                {{ row.cipher_method }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--slate);">Bạn chưa tạo bản ghi mã hóa nào.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
