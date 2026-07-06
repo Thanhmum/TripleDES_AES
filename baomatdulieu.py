@@ -102,13 +102,12 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
-
+        # -------------------------------------------------------------------------------
 def init_sqlite_db():
-    """Khởi tạo bảng người dùng và dữ liệu mã hóa nhạy cảm"""
-    with app.app_context():
-        db = get_db()
-        cursor = db.cursor()
-        # Tạo bảng lưu tài khoản đăng nhập (Phân quyền: user, admin, auditor)
+    """Khởi tạo bảng người dùng và dữ liệu mã hóa nhạy cảm an toàn"""
+    with sqlite3.connect(DATABASE) as conn:
+        cursor = conn.cursor()
+        # Tạo bảng lưu tài khoản đăng nhập
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS accounts (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -117,7 +116,7 @@ def init_sqlite_db():
                 role TEXT NOT NULL
             )
         ''')
-        # Tạo bảng lưu thông tin khách hàng nhạy cảm (Dữ liệu bị xáo trộn hoàn toàn)
+        # Tạo bảng lưu thông tin khách hàng nhạy cảm
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS sensitive_data (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -128,7 +127,7 @@ def init_sqlite_db():
                 created_by TEXT
             )
         ''')
-        db.commit()
+        conn.commit()
 
 # ==========================================
 # 5. ĐỊNH TUYẾN GIAO DIỆN (ROUTES & RBAC LOGIC)
@@ -315,6 +314,8 @@ def admin_dashboard():
 init_sqlite_db()
 
 # --- ĐOẠN SỬA CỔNG TỰ ĐỘNG CHO RENDER ---
+# --- KHỞI CHẠY CHÍNH THỨC TRÊN RENDER ---
 if __name__ == '__main__':
+    init_sqlite_db()  # Khởi tạo database tại đây
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
