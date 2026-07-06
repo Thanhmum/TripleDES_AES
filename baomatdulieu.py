@@ -5,11 +5,15 @@ import sqlite3
 from flask import Flask, render_template, request, redirect, url_for, session, flash, g
 from Crypto.Cipher import AES, DES3
 from Crypto.Random import get_random_bytes
-
+# ==========================================
 app = Flask(__name__)
-app.secret_key = 'S3CR3T_S3SS10N_K3Y_CH0_FL4SK'  # Khóa phiên làm việc của Flask
-DATABASE = 'users.db'
-LOG_FILE = 'access_log.txt'
+app.secret_key = 'S3CR3T_S3SS10N_K3Y_CH0_FL4SK'
+
+# --- ĐOẠN SỬA ĐƯỜNG DẪN CHUẨN CHO RENDER ---
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATABASE = os.path.join(BASE_DIR, 'users.db')
+LOG_FILE = os.path.join(BASE_DIR, 'access_log.txt')
+
 
 # ==========================================
 # 1. CƠ CHẾ QUẢN LÝ KHÓA (KEY MANAGEMENT)
@@ -310,5 +314,7 @@ def admin_dashboard():
 # Khởi tạo DB khi ứng dụng bắt đầu chạy
 init_sqlite_db()
 
+# --- ĐOẠN SỬA CỔNG TỰ ĐỘNG CHO RENDER ---
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
